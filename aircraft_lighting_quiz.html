@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aircraft Lighting Systems – Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --panel: #111827;
+    --panel2: #1a2235;
+    --border: #1e3a5f;
+    --accent: #00d4ff;
+    --accent2: #ff6b35;
+    --correct: #22c55e;
+    --wrong: #ef4444;
+    --text: #e2e8f0;
+    --muted: #7a8fa8;
+    --gold: #f59e0b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Sans 3', sans-serif;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,212,255,0.08) 0%, transparent 60%),
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.02) 39px, rgba(255,255,255,0.02) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.02) 39px, rgba(255,255,255,0.02) 40px);
+  }
+
+  header {
+    text-align: center;
+    padding: 40px 20px 24px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(0,212,255,0.06) 0%, transparent 100%);
+  }
+
+  header .label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  header h1 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(26px, 5vw, 42px);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.1;
+  }
+
+  header h1 span { color: var(--accent); }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  .progress-bar-wrap {
+    max-width: 700px;
+    margin: 20px auto 0;
+    background: var(--panel);
+    border-radius: 4px;
+    height: 6px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #0099ff);
+    transition: width 0.4s ease;
+    border-radius: 4px;
+  }
+
+  .meta-row {
+    max-width: 700px;
+    margin: 8px auto 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 1px;
+  }
+
+  .quiz-wrap {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+  }
+
+  .question-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .question-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+
+  .q-number {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .q-text {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 28px;
+  }
+
+  .choices {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .choice-btn {
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    text-align: left;
+    cursor: pointer;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 15px;
+    color: var(--text);
+    transition: all 0.18s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .choice-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: rgba(0,212,255,0.07);
+    transform: translateX(3px);
+  }
+
+  .choice-btn:disabled { cursor: default; }
+
+  .choice-btn .letter {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    min-width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted);
+    transition: all 0.18s;
+  }
+
+  .choice-btn:hover:not(:disabled) .letter {
+    background: var(--accent);
+    color: #000;
+  }
+
+  .choice-btn.correct {
+    border-color: var(--correct);
+    background: rgba(34,197,94,0.12);
+    animation: pulse-correct 0.4s ease;
+  }
+
+  .choice-btn.correct .letter {
+    background: var(--correct);
+    color: #000;
+  }
+
+  .choice-btn.wrong {
+    border-color: var(--wrong);
+    background: rgba(239,68,68,0.1);
+    animation: shake 0.4s ease;
+  }
+
+  .choice-btn.wrong .letter {
+    background: var(--wrong);
+    color: #fff;
+  }
+
+  .choice-btn.reveal-correct {
+    border-color: var(--correct);
+    background: rgba(34,197,94,0.07);
+  }
+
+  .choice-btn.reveal-correct .letter {
+    background: var(--correct);
+    color: #000;
+  }
+
+  @keyframes pulse-correct {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+    100% { transform: translateX(0); }
+  }
+
+  .feedback-box {
+    margin-top: 16px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.5;
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .feedback-box.show { display: block; }
+
+  .feedback-box.correct-fb {
+    background: rgba(34,197,94,0.1);
+    border: 1px solid rgba(34,197,94,0.35);
+    color: #86efac;
+  }
+
+  .feedback-box.wrong-fb {
+    background: rgba(239,68,68,0.1);
+    border: 1px solid rgba(239,68,68,0.35);
+    color: #fca5a5;
+  }
+
+  .feedback-box strong { color: #fff; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn-nav {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+
+  .btn-prev {
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .btn-prev:hover { border-color: var(--accent); color: var(--accent); }
+
+  .btn-next {
+    background: var(--accent);
+    color: #000;
+    box-shadow: 0 0 20px rgba(0,212,255,0.3);
+  }
+
+  .btn-next:hover {
+    background: #00f0ff;
+    box-shadow: 0 0 30px rgba(0,212,255,0.5);
+  }
+
+  .btn-next:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .score-tracker {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  .score-chip {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-weight: 700;
+  }
+
+  .score-chip.c { background: rgba(34,197,94,0.15); color: var(--correct); border: 1px solid rgba(34,197,94,0.3); }
+  .score-chip.w { background: rgba(239,68,68,0.12); color: var(--wrong); border: 1px solid rgba(239,68,68,0.25); }
+
+  /* Results screen */
+  .results-screen {
+    display: none;
+    text-align: center;
+    padding: 50px 20px;
+  }
+
+  .results-screen.show { display: block; }
+
+  .results-ring {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    margin: 0 auto 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid var(--accent);
+    box-shadow: 0 0 40px rgba(0,212,255,0.3), inset 0 0 30px rgba(0,212,255,0.05);
+    background: var(--panel);
+  }
+
+  .results-ring .pct {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 44px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .results-ring .pct-label {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    font-family: 'Rajdhani', sans-serif;
+  }
+
+  .results-screen h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .results-screen p { color: var(--muted); margin-bottom: 30px; }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    max-width: 420px;
+    margin: 0 auto 36px;
+  }
+
+  .r-stat {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 10px;
+  }
+
+  .r-stat .val {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+  }
+
+  .r-stat .val.green { color: var(--correct); }
+  .r-stat .val.red { color: var(--wrong); }
+  .r-stat .val.blue { color: var(--accent); }
+  .r-stat .lbl { font-size: 12px; color: var(--muted); }
+
+  .btn-restart {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 40px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0 24px rgba(0,212,255,0.35);
+    transition: all 0.2s;
+  }
+
+  .btn-restart:hover { background: #00f0ff; box-shadow: 0 0 40px rgba(0,212,255,0.5); }
+
+  /* Question nav dots */
+  .dot-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    margin: 24px 0;
+  }
+
+  .dot {
+    width: 26px;
+    height: 26px;
+    border-radius: 5px;
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .dot.current { border-color: var(--accent); color: var(--accent); }
+  .dot.answered-c { background: rgba(34,197,94,0.2); border-color: var(--correct); color: var(--correct); }
+  .dot.answered-w { background: rgba(239,68,68,0.15); border-color: var(--wrong); color: var(--wrong); }
+  .dot:hover { border-color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="label">ESCC Aviation Center · Lesson 3-2</div>
+  <h1>Aircraft <span>Lighting Systems</span></h1>
+  <div class="subtitle">Section 7 · 30 Questions · Avotek Textbook + Slides</div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progressFill" style="width:3.33%"></div>
+  </div>
+  <div class="meta-row">
+    <span id="progressText">Question 1 of 30</span>
+    <span id="scoreText">Score: 0 / 0</span>
+  </div>
+</header>
+
+<div class="quiz-wrap" id="quizWrap">
+  <div class="dot-nav" id="dotNav"></div>
+
+  <div class="question-card" id="questionCard">
+    <div class="q-number" id="qNumber">QUESTION 01</div>
+    <div class="q-text" id="qText"></div>
+    <div class="choices" id="choices"></div>
+    <div class="feedback-box" id="feedbackBox"></div>
+  </div>
+
+  <div class="nav-row">
+    <div class="score-tracker">
+      <span class="score-chip c">✓ <span id="correctCount">0</span></span>
+      <span class="score-chip w">✗ <span id="wrongCount">0</span></span>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn-nav btn-prev" id="btnPrev" onclick="navigate(-1)">← Prev</button>
+      <button class="btn-nav btn-next" id="btnNext" onclick="navigate(1)" disabled>Next →</button>
+    </div>
+  </div>
+</div>
+
+<div class="results-screen" id="resultsScreen">
+  <div class="results-ring">
+    <div class="pct" id="resPct">0%</div>
+    <div class="pct-label">SCORE</div>
+  </div>
+  <h2 id="resTitle">Quiz Complete!</h2>
+  <p id="resMsg"></p>
+  <div class="results-grid">
+    <div class="r-stat"><div class="val green" id="resCorrect">0</div><div class="lbl">Correct</div></div>
+    <div class="r-stat"><div class="val red" id="resWrong">0</div><div class="lbl">Incorrect</div></div>
+    <div class="r-stat"><div class="val blue">30</div><div class="lbl">Total</div></div>
+  </div>
+  <button class="btn-restart" onclick="restartQuiz()">Retake Quiz</button>
+</div>
+
+<script>
+const questions = [
+  {
+    q: "According to 14 CFR 91.209, when are position (navigation) lights required on aircraft?",
+    choices: [
+      "Only during instrument flight rules (IFR) operations",
+      "Between sunset and sunrise, including towing, taxi, and parking",
+      "Anytime visibility is below 3 miles",
+      "Only when operating in Class B airspace"
+    ],
+    correct: 1,
+    explain: "14 CFR Part 91.209 requires lighted position (navigation) lights for aircraft flying between sunset and sunrise — this also includes towing, taxi, and parking operations."
+  },
+  {
+    q: "On a standard aircraft, the GREEN position light is mounted at which location?",
+    choices: [
+      "Left wingtip",
+      "Top of the vertical stabilizer",
+      "Right wingtip",
+      "Fuselage tailcone"
+    ],
+    correct: 2,
+    explain: "The green light unit is always mounted at the extreme tip of the RIGHT wing. The red unit mirrors it on the left wing."
+  },
+  {
+    q: "If you observe ONLY a white position light on an aircraft at night, what does that indicate?",
+    choices: [
+      "The aircraft is heading directly toward you",
+      "The aircraft is flying at a 90° angle to your position",
+      "The aircraft is heading away from you",
+      "The aircraft has lost its wingtip lights"
+    ],
+    correct: 2,
+    explain: "Seeing only a white light (the tail/rear light) means the airplane is heading AWAY from the viewer."
+  },
+  {
+    q: "Anticollision lights (rotating beacons) are required to have a flash rate of between:",
+    choices: [
+      "10 and 40 cycles per minute",
+      "40 and 100 cycles per minute",
+      "100 and 150 cycles per minute",
+      "60 and 120 cycles per minute"
+    ],
+    correct: 1,
+    explain: "The mirrors in the anticollision light rotate in an arc, and the resulting flash rate is required to be between 40 and 100 cycles per minute."
+  },
+  {
+    q: "Which power supply voltage is used to charge the storage capacitor in a strobe light system?",
+    choices: [
+      "12 to 28 VDC",
+      "115 VAC",
+      "300/400 VDC",
+      "48 VDC"
+    ],
+    correct: 2,
+    explain: "A storage capacitor connected across the flashlamp is charged from a 300/400 VDC power supply. This high voltage is what creates the brilliant flash."
+  },
+  {
+    q: "What gas is used inside aircraft strobe flash tubes to produce the brilliant white light?",
+    choices: [
+      "Argon",
+      "Neon",
+      "Krypton",
+      "Xenon"
+    ],
+    correct: 3,
+    explain: "A trigger pulse ionizes XENON gas inside the flash tube. The xenon suddenly acquires low resistance and the energy storage capacitor discharges through it, producing the brilliant white light."
+  },
+  {
+    q: "During strobe light troubleshooting, placing a coffee cup against the tube and hearing NO 'ping' or 'snap' indicates:",
+    choices: [
+      "The xenon gas needs replacement",
+      "An open circuit, short, or non-functioning power supply",
+      "The trigger capacitor is overcharged",
+      "The lens gasket is leaking"
+    ],
+    correct: 1,
+    explain: "No ping/snap means the trigger is not firing — this points to an open circuit, a short in the wiring, or a power supply that is not working."
+  },
+  {
+    q: "On an aircraft strobe tube, Pin 1 (red wire), Pin 2 (black wire), and Pin 3 (white wire) are respectively:",
+    choices: [
+      "Trigger, ground, anode",
+      "Ground, anode, trigger",
+      "Anode, ground, trigger",
+      "Anode, trigger, ground"
+    ],
+    correct: 2,
+    explain: "Pin 1 = red wire = anode connection; Pin 2 = black wire = flash tube ground; Pin 3 = white wire = trigger wire."
+  },
+  {
+    q: "What happens if Pins 1 and 3 on a strobe tube are ever jumped together?",
+    choices: [
+      "The strobe will flash continuously",
+      "Nothing; they are designed to be bridged during testing",
+      "The trigger circuit in the power supply will be destroyed",
+      "The xenon tube will implode"
+    ],
+    correct: 2,
+    explain: "If pins 1 (anode) and 3 (trigger) are ever jumped for any reason, the trigger circuit in the power supply will be destroyed."
+  },
+  {
+    q: "FAR 25.1383 requires that landing lights must be installed so that (select the MOST COMPLETE answer):",
+    choices: [
+      "They produce at least 600 watts of output",
+      "No glare reaches the pilot, no halation affects the pilot, and sufficient light is provided for night landing",
+      "They are retractable on transport category aircraft",
+      "A single switch controls all landing lights simultaneously"
+    ],
+    correct: 1,
+    explain: "FAR 25.1383(a) requires: (1) no objectionable glare to the pilot, (2) pilot not adversely affected by halation, and (3) enough light for night landing."
+  },
+  {
+    q: "Under FAR 25.1383(c), what indication must be available to the flight crew?",
+    choices: [
+      "Total wattage currently consumed by all lighting systems",
+      "When landing lights are extended (i.e., in the deployed position)",
+      "The remaining service life of the landing light bulbs",
+      "Circuit breaker status for each lighting bus"
+    ],
+    correct: 1,
+    explain: "FAR 25.1383(c) states: There must be a means to indicate to the pilots when the landing lights are extended."
+  },
+  {
+    q: "According to FAR 25.1391, what is the minimum required intensity (in candles) of forward position lights (red/green) in the 0° to 10° arc from dead ahead?",
+    choices: [
+      "5 candles",
+      "20 candles",
+      "30 candles",
+      "40 candles"
+    ],
+    correct: 3,
+    explain: "Per the FAR 25.1391 table, forward red and green lights must be at least 40 candles in the 0° to 10° arc from dead ahead."
+  },
+  {
+    q: "For the REAR white position light, FAR 25.1391 specifies a minimum intensity for the 110° to 180° arc of:",
+    choices: [
+      "5 candles",
+      "20 candles",
+      "30 candles",
+      "40 candles"
+    ],
+    correct: 1,
+    explain: "The rear white (aft) position light must be at least 20 candles in the 110° to 180° arc."
+  },
+  {
+    q: "Under FAR 25.1401, the anticollision light system's field of coverage must extend:",
+    choices: [
+      "45 degrees above and below the horizontal plane",
+      "60 degrees above and below the horizontal plane",
+      "75 degrees above and below the horizontal plane",
+      "90 degrees above and below the horizontal plane"
+    ],
+    correct: 2,
+    explain: "FAR 25.1401(b) requires the coverage to extend in each direction within at least 75 degrees above and 75 degrees below the horizontal plane of the airplane."
+  },
+  {
+    q: "Recognition lights ('recogs') are described as:",
+    choices: [
+      "Red flashing lights on the belly for ground crew identification",
+      "Small white lights in the wing leading edge outboard near the tips, shining forward",
+      "High-intensity landing lights used in the 500-foot to 100-foot AGL band",
+      "Infrared emitters used with night-vision cockpit equipment"
+    ],
+    correct: 1,
+    explain: "Recognition lights are small white lights located in the leading edge of the wing outboard toward the wing tips, shining forward. They help ATC identify and separate aircraft."
+  },
+  {
+    q: "What is the PRIMARY purpose of wing inspection (ice) lights?",
+    choices: [
+      "To illuminate the runway during rollout",
+      "To light the wing for crew to visually detect ice formation on leading edges during night flight",
+      "To signal other aircraft during formation flying",
+      "To provide maintenance lighting during overnight ground service"
+    ],
+    correct: 1,
+    explain: "Wing inspection lights illuminate the leading edge of the wings to permit observation of ice formation during night flight. They are typically mounted flush on the outboard fuselage."
+  },
+  {
+    q: "Taxi lights differ from landing lights primarily because:",
+    choices: [
+      "Taxi lights are blue to match airport taxiway lighting",
+      "Taxi lights are not designed to provide landing light illumination levels; typical wattage is 150–250 watts",
+      "Taxi lights point upward to illuminate overhead signage",
+      "Taxi lights are required only on aircraft over 12,500 lbs"
+    ],
+    correct: 1,
+    explain: "Taxi lights provide ground illumination but NOT the degree needed for landing — they typically run 150 to 250 watts on medium and heavy aircraft."
+  },
+  {
+    q: "On aircraft with tricycle landing gear, where are taxi lights most commonly mounted?",
+    choices: [
+      "Fixed in the lower fuselage belly",
+      "On the non-steerable part of the nose landing gear",
+      "On the main gear strut fairings",
+      "Flush in the aft fuselage below the tail"
+    ],
+    correct: 1,
+    explain: "On tricycle gear aircraft, taxi lights are often mounted on the non-steerable part of the nose landing gear, with outer lights angled to cover area directly ahead and to both sides."
+  },
+  {
+    q: "Logo lights on transport category aircraft are used primarily to:",
+    choices: [
+      "Illuminate the cockpit door for security cameras",
+      "Light up vertical surfaces bearing N numbers and the airline logo, improving airport visibility",
+      "Mark wingtip vortex zones for following traffic",
+      "Replace strobe lights during ground operations"
+    ],
+    correct: 1,
+    explain: "Logo lights shine on the aft fuselage, lighting up vertical surfaces with N numbers and company logos, making aircraft easier to spot during taxi, landing, and takeoff — and advertising the airline."
+  },
+  {
+    q: "When troubleshooting a situation where NONE of the strobe lights are working, what should be suspected first?",
+    choices: [
+      "All xenon tubes have burned out simultaneously",
+      "A grounded wire that causes the power supply to shut itself off",
+      "The trigger capacitors on all units have discharged",
+      "The 14 VDC bus has tripped its circuit breaker"
+    ],
+    correct: 1,
+    explain: "If NONE of the strobe lights work, one could have a grounded wire which causes the power supply to shut itself off to prevent overheating. Disconnect all strobe leads, cycle the power supply, then reconnect one at a time to isolate the bad lead."
+  },
+  {
+    q: "What is a key CAUTION when handling strobe tubes or xenon bulbs during maintenance?",
+    choices: [
+      "Always wear anti-static gloves due to the stored charge",
+      "Do not touch them with bare hands — oil from skin concentrates heat and causes premature failure",
+      "Let them cool for 2 hours before touching after use",
+      "Always discharge the capacitor bank before touching the tube"
+    ],
+    correct: 1,
+    explain: "The caution in the textbook states: DO NOT touch strobe bulbs with bare hands. Oil film left behind helps concentrate heat and leads to premature failure."
+  },
+  {
+    q: "Which visual sign on a strobe flash tube indicates it will fail soon and should be replaced?",
+    choices: [
+      "The tube has turned yellow",
+      "The tube is blackening internally",
+      "The tube has developed surface scratches",
+      "The tube has a slight orange tint when not energized"
+    ],
+    correct: 1,
+    explain: "Internal blackening of the flash tube is the sign that it will fail soon — replacement is needed before it leaves the aircraft without working strobes."
+  },
+  {
+    q: "What is the standard method to check circuits in a lighting system when troubleshooting?",
+    choices: [
+      "Megohm testing of each wire bundle",
+      "A systematic continuity check using a DC volt-ohmmeter (VOM)",
+      "Thermal imaging of wiring runs",
+      "Full power-on functional test only"
+    ],
+    correct: 1,
+    explain: "Any standard DC volt-ohmmeter (VOM) with flexible leads and test probes is satisfactory for testing lighting circuits. Systematic continuity testing detects most faults."
+  },
+  {
+    q: "The three main fault types found in aircraft lighting electrical systems are:",
+    choices: [
+      "Ground faults, voltage spikes, and corrosion",
+      "Open circuits, shorted circuits, and low power conditions",
+      "Loose connectors, burned bulbs, and switch failures",
+      "Faulty relays, broken lamp sockets, and corroded grounds"
+    ],
+    correct: 1,
+    explain: "The textbook identifies three main faults: (1) Open circuits — broken wires; (2) Shorted circuits — grounded leads causing shortcuts back to power; (3) Low power — causing dim lights and chattering relays."
+  },
+  {
+    q: "Cloudy reflectors in position light assemblies are most commonly caused by:",
+    choices: [
+      "UV degradation of the polycarbonate lens over time",
+      "An air leak around the lens allowing moisture ingress",
+      "Overheating from an oversized replacement bulb",
+      "Chemical contamination from aircraft de-icing fluid"
+    ],
+    correct: 1,
+    explain: "Cloudy reflectors are often caused by an AIR LEAK around the lens, which allows moisture in and fogs the reflector."
+  },
+  {
+    q: "What should be used to seal cracks or leaks found around position light frames?",
+    choices: [
+      "RTV silicone sealant of any type",
+      "An approved sealing compound",
+      "Aviation-grade epoxy",
+      "Standard weather stripping adhesive"
+    ],
+    correct: 1,
+    explain: "The condition of the sealing compound around position light frames should be inspected regularly. Leaks or cracks should be filled with an APPROVED sealing compound."
+  },
+  {
+    q: "Most transport category aircraft have DUAL light installations for position lighting primarily for:",
+    choices: [
+      "Increased candlepower output to meet FAR 25.1391",
+      "Redundancy — a backup if one lamp fails",
+      "Compliance with foreign airspace color requirements",
+      "Circuit load balancing across the aircraft buses"
+    ],
+    correct: 1,
+    explain: "Most transport category airplanes have dual light installations for REDUNDANCY, ensuring position lights remain available even if one unit fails."
+  },
+  {
+    q: "In the retractable landing light circuit, what happens when the lamp mechanism reaches the FULLY LOWERED position?",
+    choices: [
+      "A secondary motor engages to hold it in place",
+      "A projection at the top of the gear quadrant opens the motor circuit and the brake solenoid releases the brake",
+      "The landing light automatically turns on via a microswitch",
+      "The brake solenoid energizes and locks the motor shaft permanently"
+    ],
+    correct: 1,
+    explain: "When fully lowered, the projection at the top of the gear quadrant opens the circuit to the motor and causes the brake solenoid to release the brake, which is then pushed against the motor shaft by a spring — stopping the motor."
+  },
+  {
+    q: "The FAA regulations covering aircraft lighting systems for transport category aircraft are found in:",
+    choices: [
+      "14 CFR Parts 33 and 35",
+      "14 CFR 25.1381/25.1403",
+      "14 CFR Parts 43 and 65",
+      "14 CFR 91.119 and 91.121"
+    ],
+    correct: 1,
+    explain: "The textbook states FAA lighting requirements are spelled out in 14 CFR 23.1381/23.1401 (normal category) and 14 CFR 25.1381/25.1403 (transport category)."
+  },
+  {
+    q: "When installing a new bulb in a light assembly, which practice is specifically cautioned against?",
+    choices: [
+      "Installing the bulb before the aircraft is fully de-energized",
+      "Applying excessive force when inserting the bulb, which can cause an open circuit in the socket",
+      "Using a bulb with higher candlepower than specified",
+      "Omitting the retaining clip on sealed-beam units"
+    ],
+    correct: 1,
+    explain: "Many bulbs fit into a socket in only one position, and EXCESSIVE FORCE can cause an incomplete or open circuit in the socket area. Caution is required during installation."
+  },
+  {
+    q: "According to the slides, anticollision lights must be positioned so that they:",
+    choices: [
+      "Flash in synchronization with the strobe lights",
+      "Do not impair the crew's vision and do not detract from the conspicuity of position lights",
+      "Are visible from a minimum distance of 5 statute miles",
+      "Are located within 6 inches of the aircraft centerline"
+    ],
+    correct: 1,
+    explain: "FAR 25.1401 requires anticollision lights to be located so their light will NOT impair the crew's vision and will NOT detract from the conspicuity (visibility) of the position lights."
+  }
+];
+
+// State
+let current = 0;
+let answers = new Array(questions.length).fill(null); // null=unanswered, 'c'=correct, 'w'=wrong
+let correctCount = 0;
+let wrongCount = 0;
+
+function buildDots() {
+  const nav = document.getElementById('dotNav');
+  nav.innerHTML = '';
+  questions.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'dot';
+    d.textContent = i + 1;
+    d.onclick = () => goTo(i);
+    nav.appendChild(d);
+  });
+}
+
+function updateDots() {
+  const dots = document.querySelectorAll('.dot');
+  dots.forEach((d, i) => {
+    d.className = 'dot';
+    if (i === current) d.classList.add('current');
+    if (answers[i] === 'c') d.classList.add('answered-c');
+    if (answers[i] === 'w') d.classList.add('answered-w');
+  });
+}
+
+function renderQuestion() {
+  const q = questions[current];
+  document.getElementById('qNumber').textContent = `QUESTION ${String(current + 1).padStart(2, '0')} OF 30`;
+  document.getElementById('qText').textContent = q.q;
+
+  const choicesEl = document.getElementById('choices');
+  choicesEl.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
+
+  q.choices.forEach((choice, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.innerHTML = `<span class="letter">${letters[i]}</span><span>${choice}</span>`;
+
+    if (answers[current] !== null) {
+      btn.disabled = true;
+      if (i === q.correct) btn.classList.add('reveal-correct');
+      // Additional styling for chosen wrong answer handled below
+    }
+
+    btn.onclick = () => handleAnswer(i, btn);
+    choicesEl.appendChild(btn);
+  });
+
+  // Restore feedback if answered
+  const fb = document.getElementById('feedbackBox');
+  fb.className = 'feedback-box';
+  fb.innerHTML = '';
+  if (answers[current] !== null) {
+    showFeedbackUI(answers[current] === 'c');
+  }
+
+  // Progress
+  document.getElementById('progressText').textContent = `Question ${current + 1} of 30`;
+  document.getElementById('progressFill').style.width = `${((current + 1) / 30) * 100}%`;
+
+  // Next button state
+  document.getElementById('btnNext').disabled = answers[current] === null;
+
+  // Prev button
+  document.getElementById('btnPrev').disabled = current === 0;
+
+  updateDots();
+  updateScoreDisplay();
+}
+
+function handleAnswer(chosen, btn) {
+  if (answers[current] !== null) return;
+
+  const q = questions[current];
+  const isCorrect = chosen === q.correct;
+
+  answers[current] = isCorrect ? 'c' : 'w';
+  if (isCorrect) correctCount++; else wrongCount++;
+
+  // Disable all buttons
+  const allBtns = document.querySelectorAll('.choice-btn');
+  allBtns.forEach((b, i) => {
+    b.disabled = true;
+    if (i === q.correct) b.classList.add('correct');
+  });
+
+  if (!isCorrect) btn.classList.add('wrong');
+
+  showFeedbackUI(isCorrect);
+  document.getElementById('btnNext').disabled = false;
+  updateDots();
+  updateScoreDisplay();
+}
+
+function showFeedbackUI(isCorrect) {
+  const q = questions[current];
+  const fb = document.getElementById('feedbackBox');
+  if (isCorrect) {
+    fb.className = 'feedback-box correct-fb show';
+    fb.innerHTML = `<strong>✓ Correct!</strong> ${q.explain}`;
+  } else {
+    fb.className = 'feedback-box wrong-fb show';
+    const letters = ['A', 'B', 'C', 'D'];
+    fb.innerHTML = `<strong>✗ Incorrect.</strong> The correct answer is <strong>${letters[q.correct]}: ${q.choices[q.correct]}</strong>. ${q.explain}`;
+  }
+}
+
+function navigate(dir) {
+  const next = current + dir;
+  if (next >= 0 && next < questions.length) {
+    goTo(next);
+  } else if (next >= questions.length) {
+    showResults();
+  }
+}
+
+function goTo(idx) {
+  current = idx;
+  renderQuestion();
+  document.getElementById('questionCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function updateScoreDisplay() {
+  document.getElementById('correctCount').textContent = correctCount;
+  document.getElementById('wrongCount').textContent = wrongCount;
+  document.getElementById('scoreText').textContent = `Score: ${correctCount} / ${correctCount + wrongCount}`;
+}
+
+function showResults() {
+  document.getElementById('quizWrap').style.display = 'none';
+  const rs = document.getElementById('resultsScreen');
+  rs.classList.add('show');
+
+  const pct = Math.round((correctCount / 30) * 100);
+  document.getElementById('resPct').textContent = pct + '%';
+  document.getElementById('resCorrect').textContent = correctCount;
+  document.getElementById('resWrong').textContent = wrongCount + (30 - correctCount - wrongCount);
+
+  let title, msg;
+  if (pct >= 90) {
+    title = 'Outstanding! 🏆';
+    msg = 'You have an excellent grasp of aircraft lighting systems. Ready for the A&P written!';
+  } else if (pct >= 70) {
+    title = 'Good Work!';
+    msg = 'Solid understanding. Review the questions you missed and you\'ll be at 100%.';
+  } else if (pct >= 50) {
+    title = 'Keep Studying';
+    msg = 'You\'re getting there — review the Avotek Section 7 text and slide deck for the areas you missed.';
+  } else {
+    title = 'More Review Needed';
+    msg = 'Re-read Avotek Section 7 and the FAR slides carefully, then retake the quiz.';
+  }
+
+  document.getElementById('resTitle').textContent = title;
+  document.getElementById('resMsg').textContent = msg;
+}
+
+function restartQuiz() {
+  answers = new Array(questions.length).fill(null);
+  correctCount = 0;
+  wrongCount = 0;
+  current = 0;
+  document.getElementById('resultsScreen').classList.remove('show');
+  document.getElementById('quizWrap').style.display = 'block';
+  renderQuestion();
+  window.scrollTo(0, 0);
+}
+
+// Init
+buildDots();
+renderQuestion();
+</script>
+</body>
+</html>
